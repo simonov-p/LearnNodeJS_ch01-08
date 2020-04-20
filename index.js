@@ -13,6 +13,7 @@ const authRouters = require('./routes/auth');
 const User = require('./models/user');
 const MONGODB_URI = require('./keys');
 const varMiddleware = require('./middleware/variables');
+const userMiddleeare = require('./middleware/user');
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(session({
     store
 })); // можем обращаться к Request session
 app.use(varMiddleware);
+app.use(userMiddleeare);
 
 app.use('/', homeRoutes);
 app.use('/add', addRoutes);
