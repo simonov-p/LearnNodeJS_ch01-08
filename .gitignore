@@ -1,0 +1,7 @@
+# keys file
+keys.js
+
+#folders
+.git
+.idea
+node_modules
