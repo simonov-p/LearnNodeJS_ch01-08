@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const csrf = require('csurf');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
@@ -39,6 +40,7 @@ app.use(session({
     saveUninitialized: false,
     store
 })); // можем обращаться к Request session
+app.use(csrf())
 app.use(varMiddleware);
 app.use(userMiddleeare);
 
