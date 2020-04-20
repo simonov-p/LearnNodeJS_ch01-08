@@ -14,4 +14,10 @@ router.post('/login', async (req, res) => {
     res.redirect('/');
 });
 
+router.get('/logout', async (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/auth/login#login')
+    })
+});
+
 module.exports = router;

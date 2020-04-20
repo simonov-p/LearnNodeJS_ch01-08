@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const homeRoutes = require('./routes/home');
+const coursesRoutes = require('./routes/courses');
 const cardRoutes = require('./routes/card');
 const addRoutes = require('./routes/add');
 const orderRouters = require('./routes/orders');
 const authRouters = require('./routes/auth');
 const User = require('./models/user');
 const mongo_url = require('./keys');
+const varMiddleware = require('./middleware/variables');
 
 const app = express();
 
@@ -39,10 +41,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 })); // можем обращаться к Request session
+app.use(varMiddleware);
 
 app.use('/', homeRoutes);
 app.use('/add', addRoutes);
 app.use('/card', cardRoutes);
+app.use('/courses', coursesRoutes);
 app.use('/orders', orderRouters);
 app.use('/auth', authRouters);
 
