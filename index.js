@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const flash = require('connect-flash');
 const csrf = require('csurf');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
@@ -11,7 +12,6 @@ const cardRoutes = require('./routes/card');
 const addRoutes = require('./routes/add');
 const orderRouters = require('./routes/orders');
 const authRouters = require('./routes/auth');
-const User = require('./models/user');
 const MONGODB_URI = require('./keys');
 const varMiddleware = require('./middleware/variables');
 const userMiddleeare = require('./middleware/user');
@@ -40,7 +40,8 @@ app.use(session({
     saveUninitialized: false,
     store
 })); // можем обращаться к Request session
-app.use(csrf())
+app.use(csrf());
+app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleeare);
 
