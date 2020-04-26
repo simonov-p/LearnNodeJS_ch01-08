@@ -17,6 +17,8 @@ const keys = require('./keys');
 const varMiddleware = require('./middleware/variables');
 const userMiddleeare = require('./middleware/user');
 const errorHandler = require('./middleware/error');
+const fileMiddleeare = require('./middleware/file');
+
 
 const app = express();
 
@@ -43,6 +45,7 @@ app.use(session({
     saveUninitialized: false,
     store
 })); // можем обращаться к Request session
+app.use(fileMiddleeare.single('avatar'));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
