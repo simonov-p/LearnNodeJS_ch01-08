@@ -12,6 +12,7 @@ const cardRoutes = require('./routes/card');
 const addRoutes = require('./routes/add');
 const orderRouters = require('./routes/orders');
 const authRouters = require('./routes/auth');
+const profileRouters = require('./routes/profile');
 const keys = require('./keys');
 const varMiddleware = require('./middleware/variables');
 const userMiddleeare = require('./middleware/user');
@@ -53,6 +54,7 @@ app.use('/card', cardRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/orders', orderRouters);
 app.use('/auth', authRouters);
+app.use('/profile', profileRouters);
 
 
 app.use(errorHandler); // в самом конце!
