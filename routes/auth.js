@@ -7,6 +7,7 @@ const keys = require('../keys');
 const regEmail = require('../emails/registration');
 const resetEmaiil = require('../emails/reset');
 const crypto = require('crypto');
+const {body, validationResult} = require('express-validator/check');
 
 const router = Router();
 const transporter = nodemailer.createTransport(sendgrid({
@@ -58,10 +59,16 @@ router.get('/logout', async (req, res) => {
     })
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', body('email').isEmail(), async (req, res) => {
     try {
-        const {email, password, repeat, name} = req.body;
+        const {email, password, confirm, name} = req.body;
         const candidate = await User.findOne({email});
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            req.flash('registerError', errors.array()[0].msg);
+            return res.status(422).redirect('/auth/login#register');
+        }
 
         if (candidate) {
             req.flash('registerError', 'Пользователь с таким email уже существует');
