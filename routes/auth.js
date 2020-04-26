@@ -86,7 +86,7 @@ router.post('/register', registerValidators, async (req, res) => {
 router.get('/reset', (req, res) => {
     res.render('auth/reset', {
         title: 'Забыли пароль',
-        error: req.flash('error')
+        error: req.flash('error.js')
     })
 });
 
@@ -94,7 +94,7 @@ router.post('/reset', (req, res) => {
     try {
         crypto.randomBytes(32, async (err, buffer) => {
             if (err) {
-                req.flash('error', 'Что-то пошло не так, повторите попытку позже');
+                req.flash('error.js', 'Что-то пошло не так, повторите попытку позже');
                 return res.redirect('auth/reset');
             }
             const token = buffer.toString('hex');
@@ -107,7 +107,7 @@ router.post('/reset', (req, res) => {
                 await transporter.sendMail(resetEmaiil(candidate.email, token));
                 res.redirect('auth/login');
             } else {
-                req.flash('error', 'Такого email нет');
+                req.flash('error.js', 'Такого email нет');
                 res.redirect('/auth/reset');
             }
         })
@@ -131,7 +131,7 @@ router.get('/password/:token', async (req, res) => {
         } else {
             res.render('auth/reset', {
                 title: 'Забыли пароль',
-                error: req.flash('error'),
+                error: req.flash('error.js'),
                 userId: user._id.toString(),
                 token: req.params.token
             });
