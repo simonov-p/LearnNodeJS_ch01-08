@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const helmet = require('helmet');
 const MongoStore = require('connect-mongodb-session')(session);
 const homeRoutes = require('./routes/home');
 const cardRoutes = require('./routes/card');
@@ -48,6 +49,7 @@ app.use(session({
 app.use(fileMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
+app.use(helmet());
 app.use(varMiddleware);
 app.use(userMiddleware);
 
@@ -61,6 +63,8 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
 app.use(errorHandler);
+
+console.log('mylog', keys.MONGODB_URI);
 
 async function start() {
     try {
