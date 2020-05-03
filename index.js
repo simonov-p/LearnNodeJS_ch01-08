@@ -21,7 +21,6 @@ const errorHandler = require('./middleware/error');
 const fileMiddleware = require('./middleware/file');
 const keys = require('./keys');
 
-const PORT = process.env.PORT || 3000;
 
 const app = express();
 const hbs = exphbs.create({
@@ -74,8 +73,11 @@ async function start() {
             useNewUrlParser: true,
             useFindAndModify: false
         });
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`)
+        const ip = '192.168.88.104';
+        const PORT = process.env.PORT || 3000;
+
+        app.listen(PORT, ip, () => {
+            console.log(`Server is running on address http://${ip}:${PORT}`)
         })
     } catch (e) {
         console.log(e)
